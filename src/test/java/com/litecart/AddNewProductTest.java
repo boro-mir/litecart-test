@@ -25,8 +25,10 @@ public class AddNewProductTest {
         $("[name=username]").setValue("admin");
         $("[name=password]").setValue("admin").pressEnter();
         successConfirmationMessage.shouldHave(exactText(" You are now logged in as admin"));
+
         menu.findBy(exactText("Catalog")).click();
         $("#content > div:nth-child(2) > a:nth-child(2)").click();
+
         $(By.name("name[en]")).setValue("Captain America Nerf Gun");
         $(By.name("code")).setValue("CA_NG" + currentTimeMillis());
         $$("#tab-general .input-wrapper [name='product_groups[]']").get(2).click();
@@ -53,6 +55,7 @@ public class AddNewProductTest {
         $(By.name("purchase_price")).setValue("32.33");
         $(By.name("purchase_price_currency_code")).selectOption("US Dollars");
         $(By.name("gross_prices[USD]")).setValue("32.33");
+
         $(By.name("save")).click();
         successConfirmationMessage.shouldHave(exactText(" Changes were successfully saved."));
     }
