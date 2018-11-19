@@ -23,6 +23,7 @@ public class ProductDetailPageTest {
         String plpItemName = plpItem.find(By.className("name")).getText();
         String plpItemRegularPrice = plpItem.find(By.className("regular-price")).getText();
         String plpItemRegularPriceFontWeight = plpItem.find(By.className("regular-price")).getCssValue("font-weight");
+        String plpItemRegularPriceFontColor = plpItem.find(By.className("regular-price")).getCssValue("color");
         String plpItemCampaignPrice = plpItem.find(By.className("campaign-price")).getText();
         String plpItemCampaignFontColor = plpItem.find(By.className("campaign-price")).getCssValue("color");
         String plpItemCampaignFontWeight = plpItem.find(By.className("campaign-price")).getCssValue("font-weight");
@@ -41,9 +42,14 @@ public class ProductDetailPageTest {
         double plpCampaignPriceFontSize = Double.parseDouble(plpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(plpCampaignPriceFontSize > plpRegPriceFontSize);
-
+        assertTrue(plpItemRegularPriceFontColor.substring(5, 18).equals("119, 119, 119"));
+        assertTrue(plpItemCampaignFontColor.substring(10, 14).equals("0, 0"));
+        
         plpItem.click();
         $("[name=add_cart_product]").shouldBe(visible);
+
+        String pdpItemRegularPriceFontColor = $("#box-product s.regular-price").getCssValue("color");
+        String pdpItemCampaignPriceFontColor = $("#box-product strong.campaign-price").getCssValue("color");
 
         $("#box-product .title").shouldHave(exactText(plpItemName));
         $("#box-product s.regular-price")
@@ -64,6 +70,8 @@ public class ProductDetailPageTest {
         double pdpCampaignPriceFontSize = Double.parseDouble(pdpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(pdpCampaignPriceFontSize > pdpRegPriceFontSize);
+        assertTrue(pdpItemRegularPriceFontColor.substring(5, 18).equals("102, 102, 102"));
+        assertTrue(pdpItemCampaignPriceFontColor.substring(10, 14).equals("0, 0"));
     }
 
 }
