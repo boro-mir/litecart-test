@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ProductDetailPageTest {
@@ -28,10 +29,6 @@ public class ProductDetailPageTest {
         String plpItemCampaignFontColor = plpItem.find(By.className("campaign-price")).getCssValue("color");
         String plpItemCampaignFontWeight = plpItem.find(By.className("campaign-price")).getCssValue("font-weight");
 
-        plpItem.find(By.className("regular-price"))
-                .shouldHave(cssValue("color", "rgba(119, 119, 119, 1)"))
-                .shouldHave(cssValue("font-size", "14.4px"));
-        plpItem.find(By.className("campaign-price")).shouldHave(cssValue("font-size", "18px"));
         plpItem.find(By.tagName("strong")).shouldHave(cssClass("campaign-price"));
         plpItem.findAll(By.className("campaign-price")).shouldHave(CollectionCondition.size(1));
 
@@ -42,9 +39,9 @@ public class ProductDetailPageTest {
         double plpCampaignPriceFontSize = Double.parseDouble(plpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(plpCampaignPriceFontSize > plpRegPriceFontSize);
-        assertTrue(plpItemRegularPriceFontColor.substring(5, 18).equals("119, 119, 119"));
-        assertTrue(plpItemCampaignFontColor.substring(10, 14).equals("0, 0"));
-        
+        assertEquals(plpItemRegularPriceFontColor.substring(5, 18), "119, 119, 119");
+        assertEquals(plpItemCampaignFontColor.substring(10, 14), "0, 0");
+
         plpItem.click();
         $("[name=add_cart_product]").shouldBe(visible);
 
@@ -54,14 +51,11 @@ public class ProductDetailPageTest {
         $("#box-product .title").shouldHave(exactText(plpItemName));
         $("#box-product s.regular-price")
                 .shouldHave(exactText(plpItemRegularPrice))
-                .shouldHave(cssValue("color", "rgba(102, 102, 102, 1)"))
-                .shouldHave(cssValue("font-weight", plpItemRegularPriceFontWeight))
-                .shouldHave(cssValue("font-size", "16px"));
+                .shouldHave(cssValue("font-weight", plpItemRegularPriceFontWeight));
         $("#box-product strong.campaign-price")
                 .shouldHave(exactText(plpItemCampaignPrice))
                 .shouldHave(cssValue("color", plpItemCampaignFontColor))
-                .shouldHave(cssValue("font-weight", plpItemCampaignFontWeight))
-                .shouldHave(cssValue("font-size", "22px"));
+                .shouldHave(cssValue("font-weight", plpItemCampaignFontWeight));
 
         String pdpRegPriceFontSizeValue = $("#box-product s.regular-price").getCssValue("font-size");
         double pdpRegPriceFontSize = Double.parseDouble(pdpRegPriceFontSizeValue.replaceAll("([^\\d.])", ""));
@@ -70,8 +64,8 @@ public class ProductDetailPageTest {
         double pdpCampaignPriceFontSize = Double.parseDouble(pdpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(pdpCampaignPriceFontSize > pdpRegPriceFontSize);
-        assertTrue(pdpItemRegularPriceFontColor.substring(5, 18).equals("102, 102, 102"));
-        assertTrue(pdpItemCampaignPriceFontColor.substring(10, 14).equals("0, 0"));
+        assertEquals(pdpItemRegularPriceFontColor.substring(5, 18), "102, 102, 102");
+        assertEquals(pdpItemCampaignPriceFontColor.substring(10, 14), "0, 0");
     }
 
 }

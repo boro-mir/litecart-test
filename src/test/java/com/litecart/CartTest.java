@@ -50,14 +50,12 @@ public class CartTest {
 
             SelenideElement summaryPrice = $(".dataTable.rounded-corners .footer  > td:nth-child(2) > strong");
             String orderPrice = summaryPrice.text();
+            $(By.name("remove_cart_item")).click();
 
-            product.find(By.name("remove_cart_item")).click();
-
-            if (summaryPrice.exists()) {
-                summaryPrice.shouldNotHave(text(orderPrice));
+            if ($("#checkout-cart-wrapper > p:nth-child(2) > a").exists()) {
+                $("#content p:nth-child(1)").shouldHave(text("There are no items in your cart."));
             } else {
-                SelenideElement textAboutEmptyCart = $("#content p:nth-child(1)");
-                textAboutEmptyCart.shouldHave(text("There are no items in your cart."));
+                summaryPrice.shouldNotHave(text(orderPrice));
             }
         }
     }
