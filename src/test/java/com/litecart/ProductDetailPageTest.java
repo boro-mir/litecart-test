@@ -4,12 +4,14 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -39,8 +41,13 @@ public class ProductDetailPageTest {
         double plpCampaignPriceFontSize = Double.parseDouble(plpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(plpCampaignPriceFontSize > plpRegPriceFontSize);
-        assertEquals(plpItemRegularPriceFontColor.substring(5, 18), "119, 119, 119");
         assertEquals(plpItemCampaignFontColor.substring(10, 14), "0, 0");
+
+        List<String> plpList = Arrays.asList(plpItemRegularPriceFontColor.substring(5, 18).split(", "));
+
+        for (String channelValue : plpList) {
+            Assert.assertEquals(channelValue, "119");
+        }
 
         plpItem.click();
         $("[name=add_cart_product]").shouldBe(visible);
@@ -64,8 +71,13 @@ public class ProductDetailPageTest {
         double pdpCampaignPriceFontSize = Double.parseDouble(pdpCampaignPriceFontSizeValue.replaceAll("([^\\d.])", ""));
 
         assertTrue(pdpCampaignPriceFontSize > pdpRegPriceFontSize);
-        assertEquals(pdpItemRegularPriceFontColor.substring(5, 18), "102, 102, 102");
         assertEquals(pdpItemCampaignPriceFontColor.substring(10, 14), "0, 0");
+
+        List<String> pdpList = Arrays.asList(pdpItemRegularPriceFontColor.substring(5, 18).split(", "));
+
+        for (String channelValue : pdpList) {
+            Assert.assertEquals(channelValue, "102");
+        }
     }
 
 }
