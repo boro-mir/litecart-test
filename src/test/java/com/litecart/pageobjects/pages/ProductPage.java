@@ -5,10 +5,18 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class ProductPage {
+public class ProductPage extends AbstractPage<ProductPage> {
 
     private SelenideElement sizeSelector = $(By.name("options[Size]")),
             addToCartButton = $(By.name("add_cart_product"));
+
+    public ProductPage() {
+        this.url = "/";
+    }
+
+    public ProductPage(String url) {
+        this.url = url;
+    }
 
     public ProductPage selectSize(Integer index) {
         if (sizeSelector.exists()) {

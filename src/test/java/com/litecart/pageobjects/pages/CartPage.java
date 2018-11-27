@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class CartPage {
+public class CartPage extends AbstractPage<CartPage> {
 
     private SelenideElement summaryPrice = $(".dataTable.rounded-corners .footer  > td:nth-child(2) > strong"),
             removeItemButton = $(By.name("remove_cart_item")),
@@ -16,6 +16,14 @@ public class CartPage {
             messageForEmptyCart = $("#content p:nth-child(1)");
 
     private ElementsCollection productsInCart = $$("#box-checkout-cart > div > ul > li");
+
+    public CartPage() {
+        this.url = "/";
+    }
+
+    public CartPage(String url) {
+        this.url = url;
+    }
 
     public void removeCartItems() {
         for (SelenideElement product : productsInCart) {

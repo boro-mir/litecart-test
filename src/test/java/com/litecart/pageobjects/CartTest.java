@@ -1,13 +1,10 @@
 package com.litecart.pageobjects;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.litecart.pageobjects.pages.HomePage;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static com.codeborne.selenide.Selenide.open;
 
 public class CartTest {
 
@@ -16,13 +13,12 @@ public class CartTest {
     @BeforeClass
     public void configureSelenide() {
         Configuration.browser = "chrome";
+        Configuration.baseUrl = "http://localhost/litecart/en";
     }
 
     @BeforeMethod
     public void setUp() {
-        open("http://localhost/litecart/en/");
-
-        homePage = new HomePage();
+        homePage = new HomePage().open();
     }
 
     @Test
@@ -34,14 +30,12 @@ public class CartTest {
                     .openProductPage(i)
                     .selectSize(1)
                     .addToCart()
-                    .checkNumberOfItemsInCart(i + 1);
-
-            Selenide.back();
+                    .checkNumberOfItemsInCart(i + 1)
+                    .back();
         }
 
         homePage
                 .openCart()
                 .removeCartItems();
     }
-
 }
