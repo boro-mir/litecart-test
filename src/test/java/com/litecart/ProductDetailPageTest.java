@@ -46,7 +46,7 @@ public class ProductDetailPageTest {
         List<String> plpList = Arrays.asList(plpItemRegularPriceFontColor.substring(5, 18).split(", "));
 
         for (String channelValue : plpList) {
-            Assert.assertEquals(channelValue, "119");
+            Assert.assertEquals(channelValue, plpList.get(0));
         }
 
         plpItem.click();
@@ -76,7 +76,7 @@ public class ProductDetailPageTest {
         List<String> pdpList = Arrays.asList(pdpItemRegularPriceFontColor.substring(5, 18).split(", "));
 
         for (String channelValue : pdpList) {
-            Assert.assertEquals(channelValue, "102");
+            Assert.assertEquals(channelValue, pdpList.get(0));
         }
     }
 
